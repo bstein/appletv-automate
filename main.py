@@ -1,5 +1,7 @@
+from aioconsole import ainput
 import asyncio
-from signal import SIGINT, SIGQUIT, SIGTERM
+import platform
+from signal import SIGINT, SIGTERM
 import sys
 
 from connect_apple_tv import connect_apple_tv
@@ -46,14 +48,23 @@ async def main():
 
         print(
             f'{get_log_prefix()}Successfully added listeners!')
-        print(
-            f'{get_log_prefix(False)}Press Ctrl+C to close connection and exit')
+        
+        if platform.system() == 'Windows':
+            should_exit: bool = False
+            include_time: bool = False
+            while not should_exit:
+                user_input: str = await ainput(f'{get_log_prefix(include_time)}Type "exit" to close connection and exit\n')
+                include_time = True
+                should_exit = user_input.strip() == 'exit'
+        else:
+            print(
+                f'{get_log_prefix(False)}Press Ctrl+C to close connection and exit')
+            # Attach signal handlers to trigger exit event when killed or terminated
+            exit_event = asyncio.Event()
+            for signal in [SIGINT, SIGTERM]:
+                loop.add_signal_handler(signal, exit_event.set)
+            await exit_event.wait()
 
-        # Attach signal handlers to trigger exit event when killed or terminated
-        exit_event = asyncio.Event()
-        for signal in [SIGINT, SIGTERM, SIGQUIT]:
-            loop.add_signal_handler(signal, exit_event.set)
-        await exit_event.wait()
         print()
     except KeyboardInterrupt:
         exit_code = 130

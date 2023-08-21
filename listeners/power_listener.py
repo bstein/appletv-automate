@@ -43,7 +43,7 @@ class PowerListener(interface.PowerListener):
 
         if is_stable_change:
             print(
-                f'{get_log_prefix()}Stable update: {new_state} - calling handle_powerstate_change()...')
+                f'{get_log_prefix()}Stable update: {new_state}')
             self.prev_stable_state = new_state
             asyncio.ensure_future(utils.publish_event_to_ifttt_webhooks(
                 'atv_power_on' if new_state == const.PowerState.On else 'atv_power_off'))
