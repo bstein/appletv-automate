@@ -30,7 +30,7 @@ The motivation behind this project was to enable running IFTTT applets when an A
 
 4. Open `main.py` and find the `# TODO` comment. By default, the `PowerListener` is uncommented. Comment/uncomment the other listeners based on which ones you would like to use. You will likely want to tweak the listener classes to fit your needs, but you may use them as-is for now.
 
-5. Start `main.py`. To quit, press `Ctrl+C`.
+5. Start `main.py`
 
    ```
    python main.py
