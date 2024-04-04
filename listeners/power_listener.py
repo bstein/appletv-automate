@@ -20,6 +20,8 @@ class PowerListener(interface.PowerListener):
         self.prev_stable_state = initial_power_state
         print(
             f'{get_log_prefix()}Initialized with initial_power_state: {initial_power_state}')
+        asyncio.ensure_future(utils.publish_event_to_ifttt_webhooks(
+            'atv_power_on' if initial_power_state == const.PowerState.On else 'atv_power_off'))
 
     def powerstate_update(self, _: const.PowerState, new_state: const.PowerState):
         now_time = int(time())

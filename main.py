@@ -30,8 +30,8 @@ async def main():
         # connected_apple_tv.audio.listener = audio_listener
 
         # DeviceListener
-        # device_listener = DeviceListener()
-        # connected_apple_tv.listener = device_listener
+        device_listener = DeviceListener()
+        connected_apple_tv.listener = device_listener
 
         # KeyboardListener
         # keyboard_listener = KeyboardListener()
@@ -48,7 +48,7 @@ async def main():
 
         print(
             f'{get_log_prefix()}Successfully added listeners!')
-        
+
         if platform.system() == 'Windows':
             should_exit: bool = False
             include_time: bool = False
